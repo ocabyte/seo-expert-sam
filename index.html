@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="SEO Expert — creative canvas-style portfolio. SEO is not about rankings. It's about relevance." />
+<title>SEO Expert — Portfolio</title>
+
+<!-- Google Fonts: display serif for headings + clean sans for body -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  /* =========================
+     Variables & base setup
+     ========================= */
+  :root{
+    --bg: #fbf7f0;           /* soft off-white / cream */
+    --surface: #fff;         /* card surface */
+    --charcoal: #2e2e2e;     /* deep gray text (avoid black) */
+    --muted: #6d6d6d;
+    --accent-olive: #9aa56b;
+    --accent-blue: #7aa7d9;
+    --accent-coral: #ff8a7a;
+    --card-shadow: 0 8px 22px rgba(34,34,34,0.08);
+    --card-shadow-strong: 0 16px 46px rgba(34,34,34,0.12);
+    --radius: 18px;
+    --max-width: 1150px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body{
+    margin:0;
+    font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color:var(--charcoal);
+    background: var(--bg);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.5;
+  }
+
+  /* Page container for centering */
+  .wrap{
+    max-width: var(--max-width);
+    margin: 48px auto;
+    padding: 28px;
+    position:relative;
+  }
+
+  /* =========================
+     Floating / sticky navbar
+     ========================= */
+  header.nav{
+    position: sticky;
+    top: 20px;
+    z-index: 60;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    backdrop-filter: blur(4px);
+  }
+
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+    box-shadow: var(--card-shadow);
+    border-radius: 16px;
+    padding: 10px 16px;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:700;
+  }
+
+  .brand .name{
+    font-family: 'Playfair Display', serif;
+    font-size:20px;
+    letter-spacing: -0.4px;
+    color:var(--charcoal);
+  }
+
+  nav.links{
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+
+  nav.links a{
+    text-decoration:none;
+    color:var(--muted);
+    font-weight:600;
+    padding:8px 10px;
+    border-radius:12px;
+    transition:all .18s ease;
+    font-size:14px;
+  }
+  nav.links a:hover{
+    transform:translateY(-3px);
+    color:var(--charcoal);
+  }
+
+  /* =========================
+     Canvas shapes (background)
+     ========================= */
+  .canvas-shapes{
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .shape{
+    position:absolute;
+    filter: blur(10px);
+    opacity:.45;
+    transform: rotate(-12deg);
+    mix-blend-mode: multiply;
+  }
+
+  /* =========================
+     Hero section
+     ========================= */
+  .hero{
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:32px;
+    align-items: center;
+    margin-top:22px;
+  }
+
+  .hero-left{
+    padding: 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.75));
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    position:relative;
+    overflow:visible;
+  }
+
+  h1.headline{
+    margin:0 0 18px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 6vw, 64px);
+    line-height: 0.96;
+    letter-spacing: -0.6px;
+    color: var(--charcoal);
+  }
+  .sub{
+    font-size:18px;
+    color:var(--muted);
+    margin-bottom: 18px;
+    max-width: 62ch;
+  }
+
+  .cta-row{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 14px;
+    border-radius:12px;
+    font-weight:700;
+    text-decoration:none;
+    cursor:pointer;
+    border: none;
+    background:var(--accent-blue);
+    color:white;
+    box-shadow: 0 8px 20px rgba(122,167,217,0.18);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:hover{ transform: translateY(-4px); box-shadow: var(--card-shadow-strong); }
+
+  .hero-right{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform: translateY(-6px); /* slight asymmetry */
+  }
+
+  .portrait{
+    width:320px;
+    height:320px;
+    border-radius: 50%;
+    overflow:hidden;
+    border: 8px solid rgba(255,255,255,0.9);
+    box-shadow: var(--card-shadow-strong);
+    background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));
+  }
+
+  .portrait img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* =========================
+     Sections: About / Skills / Experience / Wins / Testimonials / Contact
+     ========================= */
+  section{
+    margin-top:28px;
+  }
+
+  .card{
+    background:var(--surface);
+    padding:20px;
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{ transform: translateY(-6px); box-shadow: var(--card-shadow-strong); }
+
+  /* About / Philosophy */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1fr 360px;
+    gap:24px;
+    align-items:start;
+  }
+  .about-text p{ margin:0 0 12px 0; color:var(--muted); font-size:17px; }
+  .about-quote{
+    font-family: 'Playfair Display', serif;
+    font-size:20px;
+    color:var(--charcoal);
+    line-height:1.2;
+  }
+
+  /* Skills floating cards */
+  .skills{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    padding:4px 0;
+  }
+  .skill{
+    min-width:160px;
+    max-width: 220px;
+    padding:14px;
+    border-radius:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+    box-shadow: var(--card-shadow);
+    display:flex;
+    gap:12px;
+    align-items:center;
+    transition: transform .18s cubic-bezier(.2,.9,.26,1), box-shadow .18s ease;
+    cursor:default;
+  }
+  .skill:hover{ transform: translateY(-8px); box-shadow: var(--card-shadow-strong); }
+  .skill svg{ width:36px; height:36px; flex-shrink:0; }
+
+  .skill h4{ margin:0; font-size:15px; font-weight:700; }
+  .skill p{ margin:0; font-size:13px; color:var(--muted); }
+
+  /* Experience timeline */
+  .timeline{
+    position:relative;
+    padding-left:26px;
+    border-left:2px dashed rgba(0,0,0,0.06);
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .timeline-item{
+    position:relative;
+    padding:14px;
+    border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+    box-shadow: var(--card-shadow);
+    max-width: 760px;
+  }
+  .timeline-item::before{
+    content:'';
+    position:absolute;
+    left:-14px;
+    top:18px;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--accent-olive);
+    box-shadow: 0 3px 8px rgba(154,165,107,0.18);
+  }
+
+  /* Selected Wins */
+  .wins{
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+  }
+  .win{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+    border-radius:16px;
+    min-height:120px;
+    font-weight:700;
+    font-size:16px;
+    text-align:center;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+    box-shadow: var(--card-shadow);
+  }
+
+  /* Testimonials */
+  .testi{
+    display:grid;
+    grid-template-columns: 1fr 320px;
+    gap:20px;
+    align-items:center;
+  }
+  .quote{
+    font-family: 'Playfair Display', serif;
+    font-size:34px;
+    line-height:1.02;
+    margin:0 0 10px 0;
+  }
+  .author{ color:var(--muted); font-weight:700; }
+
+  /* Contact */
+  .contact-row{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+  }
+  .contact-card{
+    flex:1 1 420px;
+  }
+  .links-inline a{
+    display:inline-block;
+    text-decoration:none;
+    background:transparent;
+    border-radius:12px;
+    padding:10px 12px;
+    color:var(--charcoal);
+    font-weight:700;
+    margin-right:8px;
+    transition: transform .12s ease;
+  }
+  .links-inline a:hover{ transform: translateY(-3px); }
+
+  /* =========================
+     Lightweight scroll animations
+     ========================= */
+  .reveal{
+    opacity:0;
+    transform: translateY(18px);
+    transition: opacity .6s ease, transform .6s cubic-bezier(.2,.9,.26,1);
+    will-change: opacity, transform;
+  }
+  .reveal.in-view{
+    opacity:1;
+    transform: translateY(0);
+  }
+
+  /* =========================
+     Responsive / small screens
+     ========================= */
+  @media (max-width: 980px){
+    .hero{ grid-template-columns: 1fr; }
+    .hero-right{ order:-1; display:flex; justify-content:center; margin-bottom:6px; }
+    .about-grid{ grid-template-columns: 1fr; }
+    .testi{ grid-template-columns: 1fr; }
+    .hero-left{ padding:16px; }
+    .nav-inner{ padding:8px 12px; }
+  }
+  @media (max-width:520px){
+    .portrait{ width:220px; height:220px; }
+    .brand .name{ font-size:18px; }
+    nav.links{ display:none; } /* keep nav minimal on tiny screens */
+    .wrap{ padding:16px; margin:16px auto; }
+  }
+
+  /* small helper */
+  .muted { color:var(--muted); font-size:14px; }
+</style>
+</head>
+<body>
+
+<!-- Canvas decorative shapes -->
+<div class="canvas-shapes" aria-hidden="true">
+  <!-- Soft blob shapes for the canvas effect, layered for depth -->
+  <svg class="shape" style="left:-6%; top:6%; width:420px; height:260px;" viewBox="0 0 600 400" preserveAspectRatio="none">
+    <g fill="#9aa56b" opacity="0.09"><path d="M82,46C99,23,162,8,231,8C304,8,373,24,409,61C445,98,454,154,436,197C418,240,373,272,323,292C273,312,219,320,170,304C121,288,78,248,59,203C40,158,64,100,82,46Z"></path></g>
+  </svg>
+
+  <svg class="shape" style="right:-6%; bottom:10%; width:480px; height:320px; transform: rotate(6deg);" viewBox="0 0 600 400" preserveAspectRatio="none">
+    <g fill="#7aa7d9" opacity="0.08"><path d="M120,15C170,-6,262,2,328,28C392,54,441,102,456,154C471,206,452,258,406,287C360,316,300,315,246,301C192,287,144,260,107,223C70,186,70,118,120,15Z"></path></g>
+  </svg>
+
+  <svg class="shape" style="left:12%; bottom:2%; width:260px; height:170px; transform: rotate(-20deg);" viewBox="0 0 400 250" preserveAspectRatio="none">
+    <g fill="#ff8a7a" opacity="0.06"><path d="M37,36C66,18,121,7,176,13C231,19,276,44,308,74C340,104,356,146,341,184C326,222,285,244,239,246C193,248,144,232,100,214C56,196,29,158,23,110C17,62,8,54,37,36Z"></path></g>
+  </svg>
+</div>
+
+<div class="wrap">
+
+  <!-- NAVBAR -->
+  <header class="nav" role="banner">
+    <div class="nav-inner reveal">
+      <div class="brand" aria-label="Brand">
+        <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent-olive),var(--accent-blue));display:flex;align-items:center;justify-content:center;color:white;font-weight:800">SE</div>
+        <div>
+          <div class="name">Sam Ellis</div>
+          <div class="muted" style="font-size:12px;margin-top:-2px">SEO • Growth • Content Strategy</div>
+        </div>
+      </div>
+
+      <nav class="links" role="navigation" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Journey</a>
+        <a href="#wins">Wins</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero" aria-label="Hero">
+      <div class="hero-left card reveal">
+        <!-- Oversized headline with personality and line breaks -->
+        <h1 class="headline">
+          SEO is not about<br>
+          <span style="color:var(--accent-olive)">rankings.</span><br>
+          It's about <span style="color:var(--accent-blue)">relevance.</span>
+        </h1>
+
+        <p class="sub">
+          I help products and teams find the right audiences — not by chasing algorithms, but by shaping clear intent signals,
+          better content experience, and measurement that matters. Think editorial canvas meets technical rigor.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn" href="#contact">Let's talk — hire me</a>
+          <a class="btn" href="mailto:hi@example.com" style="background:transparent;color:var(--charcoal);box-shadow:none;border:1px solid rgba(0,0,0,0.06)">Email</a>
+        </div>
+
+        <!-- small metadata row -->
+        <div style="display:flex;gap:12px;margin-top:14px;color:var(--muted);font-size:13px">
+          <div>📈 Focus: Organic growth, content & technical SEO</div>
+          <div style="opacity:.6">•</div>
+          <div>🧭 Role: SEO Lead / Consultant</div>
+        </div>
+      </div>
+
+      <aside class="hero-right reveal">
+        <!-- Rounded portrait with example Unsplash placeholder -->
+        <div class="portrait" aria-hidden="true">
+          <!-- Unsplash random portrait: you can replace width/height query params as needed -->
+          <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=600&q=80" alt="Portrait placeholder">
+        </div>
+      </aside>
+    </section>
+
+    <!-- ABOUT / PHILOSOPHY -->
+    <section id="about" class="reveal" aria-labelledby="about-heading" style="margin-top:36px;">
+      <div class="about-grid">
+        <div class="card about-text">
+          <h3 id="about-heading" style="font-family:'Playfair Display',serif;margin-top:0;margin-bottom:8px">About — my SEO philosophy</h3>
+          <p>
+            I treat SEO like editorial design: it's part research, part narrative, and part product optimization. The goal is not
+            to trick an indexer — it's to make things obvious and useful for humans *and* machines. That means fewer hacks, more
+            clarity: clear page purpose, helpful content, and clean signals that scale.
+          </p>
+          <p>
+            My process blends technical fixes (site architecture, index policy), content strategy (topic maps, intent mapping),
+            and measurement (holistic KPIs beyond position). I'm a builder who cares about teams and systems that sustain growth.
+          </p>
+        </div>
+
+        <div class="card about-quote">
+          <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Core belief</div>
+          <div style="font-size:18px">
+            Search success is a by-product of relevance: consistently helpful pages, well-surfaced signals, and readable story arcs.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS / WHAT I DO -->
+    <section id="skills" style="margin-top:36px;">
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:12px">What I do</h3>
+      <div class="skills reveal">
+        <!-- Each skill is a 'floating card' with a small inline SVG icon -->
+        <div class="skill">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 12h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M4 6h16M6 18h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.6"/>
+          </svg>
+          <div>
+            <h4>Technical SEO</h4>
+            <p>Site architecture, crawl & index strategy</p>
+          </div>
+        </div>
+
+        <div class="skill">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8 12h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <div>
+            <h4>Content Strategy</h4>
+            <p>Topic maps, intent-first briefs</p>
+          </div>
+        </div>
+
+        <div class="skill">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M8 8h8M8 12h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>
+          </svg>
+          <div>
+            <h4>Analytics & Growth</h4>
+            <p>Holistic KPIs & experiments</p>
+          </div>
+        </div>
+
+        <div class="skill">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 21h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <rect x="6" y="4" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+          <div>
+            <h4>Content Ops</h4>
+            <p>Scaling editorial workflows</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE / JOURNEY -->
+    <section id="experience" style="margin-top:36px;">
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:12px">Experience — journey</h3>
+      <div class="card timeline reveal" aria-label="Experience timeline">
+        <div class="timeline-item">
+          <div style="font-size:13px;color:var(--muted)">2020 — Present</div>
+          <div style="font-weight:700;margin-top:6px">Lead SEO, BrightWave (remote)</div>
+          <p class="muted" style="margin-top:8px">
+            Built a content platform and SEO system for a portfolio of SaaS products. Reduced duplicate content surface by 42%
+            and designed a topic-cluster approach used company-wide.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div style="font-size:13px;color:var(--muted)">2017 — 2020</div>
+          <div style="font-weight:700;margin-top:6px">Consultant — growth & content</div>
+          <p class="muted" style="margin-top:8px">
+            Short engagements across fintech and publishing: migration support, canonical strategy, and long-form content roadmaps.
+            Focused on measurable traffic uplift and retention signals.
+          </p>
+        </div>
+
+        <div class="timeline-item">
+          <div style="font-size:13px;color:var(--muted)">2014 — 2017</div>
+          <div style="font-weight:700;margin-top:6px">Content Editor & SEO</div>
+          <p class="muted" style="margin-top:8px">
+            Hands-on editorial and SEO work — long-form articles, comms strategies, and on-site tests that informed product decisions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SELECTED WINS -->
+    <section id="wins" style="margin-top:36px;">
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:12px">Selected wins</h3>
+      <div class="wins reveal">
+        <div class="win" style="background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(250,245,240,0.95));">
+          Grew organic sessions 3.5x for a SaaS funnel in 10 months.
+        </div>
+        <div class="win" style="background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(245,255,252,0.95));">
+          Recovered 70% lost traffic post-migration with targeted canonical & sitemap strategy.
+        </div>
+        <div class="win" style="background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(255,245,246,0.95));">
+          Reduced content waste by 40% through an editorial audit & roadmap.
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section style="margin-top:36px;">
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:12px">Testimonials</h3>
+      <div class="card testi reveal">
+        <div>
+          <div class="quote">“Sam helped us see SEO as product work — the uplift was immediate and sustainable.”</div>
+          <div class="author">— Lara M., VP Product</div>
+        </div>
+        <div class="card" style="align-self:stretch;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+          <div style="font-weight:800;font-size:18px">Available for: full-time / contract</div>
+          <div class="muted" style="margin-top:8px">Open to roles in remote-first and hybrid teams</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" style="margin-top:40px;">
+      <h3 style="font-family:'Playfair Display',serif;margin-bottom:12px">Contact</h3>
+
+      <div class="card contact-row reveal">
+        <div class="contact-card">
+          <h4 style="margin:0 0 8px 0;font-size:20px">Friendly, calm CTA</h4>
+          <p class="muted" style="margin:0 0 12px 0">
+            If you're hiring for SEO leadership, growth experimentation, or content strategy — I'd love to hear about the role.
+            Tell me the challenge, the team, and what success looks like.
+          </p>
+
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <a href="mailto:hi@example.com" class="btn">Email me</a>
+            <a class="btn" href="https://www.linkedin.com" target="_blank" rel="noopener" style="background:var(--accent-olive)">LinkedIn</a>
+            <div class="muted" style="font-size:13px">Or drop a note — I'll reply within a few weekdays.</div>
+          </div>
+        </div>
+
+        <div style="flex:0 0 260px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;">
+          <div class="muted" style="font-size:13px">Quick links</div>
+          <div class="links-inline">
+            <a href="#wins">Selected wins</a>
+            <a href="#experience">Journey</a>
+            <a href="mailto:hi@example.com">Email</a>
+          </div>
+
+          <div style="margin-top:18px;font-size:12px;color:var(--muted)">
+            © <strong>Sam Ellis</strong> — SEO & Content Strategy
+          </div>
+        </div>
+      </div>
+      <p>Built By <a href="https://www.facebook.com/profile.php?id=100063808086007">OcaByte</a></p>
+    </section>
+
+  </main>
+
+  <!-- small footer spacing -->
+  <div style="height:48px"></div>
+</div>
+
+<!-- =========================
+     Minimal JS: reveal on scroll + small nav active highlight
+     ========================= -->
+<script>
+  // Lightweight reveal-on-scroll using IntersectionObserver
+  (function(){
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => io.observe(el));
+  })();
+
+  // Optional: highlight current nav link for section in view (lightweight)
+  (function(){
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const navLinks = [...document.querySelectorAll('nav.links a')];
+
+    if(!sections.length || !navLinks.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        const id = e.target.getAttribute('id');
+        const link = document.querySelector('nav.links a[href="#' + id + '"]');
+        if(e.isIntersecting){
+          navLinks.forEach(n => n.style.opacity = '0.6');
+          if(link) link.style.opacity = '1';
+        }
+      });
+    }, { rootMargin: '0px 0px -70% 0px', threshold: 0.05 });
+
+    sections.forEach(s => observer.observe(s));
+  })();
+
+  // Small accessibility enhancement: reduce motion respects
+  (function(){
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if(mq.matches){
+      document.documentElement.style.scrollBehavior = 'auto';
+      // remove transition heavy classes
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+    }
+  })();
+</script>
+
+</body>
+</html>
